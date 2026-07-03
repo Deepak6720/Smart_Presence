@@ -13,7 +13,7 @@ const { aiLimiter } = require('../middleware/rateLimiter');
 
 router.use(protect);
 
-router.get('/my-risk',      authorizeRoles('student'), aiLimiter, getMyRiskPrediction);
+router.get('/my-risk', authorizeRoles('student'), aiLimiter, getMyRiskPrediction);
 router.post('/anomaly/:subjectId', authorizeRoles('teacher', 'admin'), aiLimiter, runAnomalyDetection);
 
 router.get('/platform-risk', authorizeRoles('admin'), getPlatformRiskOverview);

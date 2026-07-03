@@ -1,6 +1,9 @@
 const Attendance = require("../models/Attendance");
 const Subject = require("../models/Subject");
 const Holiday = require("../models/Holiday");
+const sendEmail = require('../utils/sendEmail');
+const { lowAttendanceTemplate } = require('../utils/emailTemplates');
+
 const normalizeDate = (dateStr) => {
   const d = new Date(dateStr);
   d.setUTCHours(0, 0, 0, 0);
@@ -65,6 +68,7 @@ const markAttendance = async (req, res) => {
     }));
 
     await Attendance.bulkWrite(operations);
+    sendRealtimeThresholdAlerts(subjectId, records).catch(() => {});
 
     res.status(200).json({
       message: `Attendance marked for ${records.length} students`,
@@ -441,6 +445,54 @@ const getPlatformAnalytics = async (req, res) => {
   }
 };
 
+const sendRealtimeThresholdAlerts = async (subjectId, records) => {
+  try {
+    const absentStudentIds = records
+      .filter(r => r.status === 'absent')
+      .map(r => r.studentId);
+
+    if (absentStudentIds.length === 0) return;
+
+    const subject = await Subject.findById(subjectId)
+      .populate('students', 'name email');
+
+    if (!subject) return;
+
+    for (const studentId of absentStudentIds) {
+      const student = subject.students.find(
+        s => s._id.toString() === studentId.toString()
+      );
+      if (!student) continue;
+
+      const allRecords = await Attendance.find({
+        student: studentId,
+        subject: subjectId
+      });
+
+      if (allRecords.length < 3) continue;
+
+      const attended = allRecords.filter(
+        r => r.status === 'present' || r.status === 'late'
+      ).length;
+      const percentage = Math.round((attended / allRecords.length) * 100);
+
+      if (percentage < 75) {
+        sendEmail({
+          to: student.email,
+          subject: `Attendance Alert — ${subject.name}`,
+          html: lowAttendanceTemplate({
+            name: student.name,
+            subjectName: subject.name,
+            percentage
+          })
+        }).catch(err => console.error(`Real-time alert failed for ${student.name}:`, err.message));
+      }
+    }
+  } catch (err) {
+    console.error('sendRealtimeThresholdAlerts error:', err.message);
+  }
+};
+
 module.exports = {
   markAttendance,
   getSession,
@@ -450,4 +502,5 @@ module.exports = {
   getAdminReport,
   getTodayCount,
   getPlatformAnalytics,
+  sendRealtimeThresholdAlerts
 };

@@ -527,5 +527,5 @@ const triggerDailyCheck = async (req, res) => {
 
 
 module.exports = {
-  getMyRiskPrediction, getPlatformRiskOverview, runAnomalyDetection, getAllAnomalies  ,triggerDailyCheck       
+  getMyRiskPrediction, getPlatformRiskOverview, runAnomalyDetection, getAllAnomalies  ,triggerDailyCheck     
 };
