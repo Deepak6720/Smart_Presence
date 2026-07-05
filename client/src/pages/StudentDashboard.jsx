@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import Sidebar from "../components/UI/Sidebar";
 import Navbar from "../components/UI/Navbar";
 import StatsCard from "../components/UI/StatsCard";
 import axiosInstance from "../utils/axiosInstance";
-import { Link } from "react-router-dom";
 import { TrendingUp, BookOpen, AlertTriangle, Brain, Scan } from "lucide-react";
 
 export const StudentHome = () => {
@@ -140,21 +139,37 @@ export const StudentHome = () => {
             <div className="h-32 flex items-center justify-center">
               <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
             </div>
-          ) : !attendanceData || attendanceData?.attendance?.length === 0 ? (
+          ) : !attendanceData || attendanceData.attendance.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-32 text-center">
               <BookOpen className="w-8 h-8 text-gray-200 mb-2" />
-              <p className="text-sm text-gray-500">No subjects enrolled yet</p>
+              <p className="text-sm text-gray-500 font-medium">
+                No subjects enrolled yet
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Ask your admin to enroll you in subjects
+              </p>
+            </div>
+          ) : attendanceData.overall.totalClasses === 0 ? (
+            <div className="flex flex-col items-center justify-center h-32 text-center">
+              <BookOpen className="w-8 h-8 text-gray-200 mb-2" />
+              <p className="text-sm text-gray-500 font-medium">
+                Enrolled in {attendanceData.attendance.length} subject
+                {attendanceData.attendance.length > 1 ? "s" : ""}
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Attendance will appear once your teacher marks sessions
+              </p>
             </div>
           ) : (
             <div className="space-y-3">
               {attendanceData.attendance.slice(0, 3).map((item) => (
                 <div key={item.subject._id}>
                   <div className="flex items-center justify-between mb-1">
-                    <p className="text-sm font-medium text-gray-800">
+                    <p className="text-sm font-medium text-gray-800 truncate mr-2">
                       {item.subject.name}
                     </p>
                     <span
-                      className={`text-sm font-bold ${
+                      className={`text-sm font-bold flex-shrink-0 ${
                         item.percentage >= 75
                           ? "text-green-600"
                           : "text-red-600"
@@ -165,7 +180,7 @@ export const StudentHome = () => {
                   </div>
                   <div className="w-full bg-gray-100 rounded-full h-1.5">
                     <div
-                      className={`h-1.5 rounded-full ${
+                      className={`h-1.5 rounded-full transition-all ${
                         item.percentage >= 75 ? "bg-green-500" : "bg-red-500"
                       }`}
                       style={{ width: `${item.percentage}%` }}
@@ -174,16 +189,17 @@ export const StudentHome = () => {
                 </div>
               ))}
               {attendanceData.attendance.length > 3 && (
-                <a
-                  href="/student/attendance"
+                <Link
+                  to="/student/attendance"
                   className="text-xs text-blue-600 hover:underline"
                 >
                   View all {attendanceData.attendance.length} subjects →
-                </a>
+                </Link>
               )}
             </div>
           )}
         </div>
+
         <div className="bg-white rounded-xl border border-gray-200 p-5">
           <div className="flex items-center gap-2 mb-4">
             <Brain className="w-4 h-4 text-purple-600" />
@@ -217,12 +233,12 @@ export const StudentHome = () => {
               <p className="text-xs text-gray-600">
                 Powered by Gemini AI — based on your 30-day trend
               </p>
-              <a
-                href="/student/risk"
+              <Link
+                to="/student/risk"
                 className="text-xs text-blue-600 hover:underline mt-2 inline-block"
               >
                 View full prediction
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="bg-purple-50 border border-purple-100 rounded-xl p-4 text-center">

@@ -57,9 +57,9 @@ const RISK_CONFIG = {
 
 const TREND_CONFIG = {
   improving: { icon: TrendingUp, color: 'text-green-600', label: 'Improving ↑' },
-  stable: { icon: Minus, color: 'text-blue-600', label: 'Stable →' },
-  declining: { icon: TrendingDown, color: 'text-orange-600', label: 'Declining ↓' },
-  rapidly_declining: { icon: TrendingDown, color: 'text-red-600', label: 'Rapidly Declining ↓↓' }
+  stable: { icon: Minus, color: 'text-blue-600', label: 'Stable ' },
+  declining: { icon: TrendingDown, color: 'text-orange-600', label: 'Declining ' },
+  rapidly_declining: { icon: TrendingDown, color: 'text-red-600', label: 'Rapidly Declining ' }
 };
 
 const timeAgo = (dateStr) => {
@@ -157,7 +157,7 @@ const SubjectPredictionCard = ({ subjectPrediction }) => {
                 : 'bg-gray-100 text-gray-600'
             }`}>
               {subjectPrediction.maxAbsencesAllowed <= 0
-                ? '⚠️ No absences left'
+                ? 'No absences left'
                 : `Max ${subjectPrediction.maxAbsencesAllowed} more absence${subjectPrediction.maxAbsencesAllowed > 1 ? 's' : ''} allowed`
               }
             </span>
@@ -172,7 +172,7 @@ const SubjectPredictionCard = ({ subjectPrediction }) => {
 
           {subjectPrediction.patternObserved && (
             <span className="text-xs bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full font-medium">
-              🔍 {subjectPrediction.patternObserved}
+               {subjectPrediction.patternObserved}
             </span>
           )}
         </div>

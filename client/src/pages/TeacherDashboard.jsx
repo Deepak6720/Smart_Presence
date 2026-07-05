@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
-import { Outlet } from "react-router-dom";
+import { Outlet,Link } from "react-router-dom";
 import Sidebar from "../components/UI/Sidebar";
 import Navbar from "../components/UI/Navbar";
 import StatsCard from "../components/UI/StatsCard";
-import { Link } from "react-router-dom";
+
 import {
   BookOpen,
   Users,
@@ -189,12 +189,9 @@ export const TeacherHome = () => {
               <p className="text-sm text-gray-500 font-medium">
                 No classes today
               </p>
-              <a
-                href="/teacher/manual-attendance"
-                className="text-xs text-blue-600 hover:underline mt-2"
-              >
-                Mark attendance for another date
-              </a>
+              <Link to="/teacher/manual-attendance" className="text-xs text-blue-600 hover:underline mt-2">
+              Mark attendance for another date 
+              </Link>
             </div>
           ) : (
             <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
@@ -204,12 +201,9 @@ export const TeacherHome = () => {
               <p className="text-sm text-green-700 font-medium">
                 class{todayClasses > 1 ? "es" : ""} today
               </p>
-              <a
-                href="/teacher/face-attendance"
-                className="text-xs text-blue-600 hover:underline mt-2 inline-block"
-              >
-                Open Face Attendance →
-              </a>
+              <Link to="/teacher/face-attendance" className="text-xs text-blue-600 hover:underline mt-2 inline-block">
+              Open Face Attendance 
+              </Link>
             </div>
           )}
         </div>

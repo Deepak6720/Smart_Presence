@@ -284,14 +284,17 @@ const CalendarView = () => {
       {selectedCell && (
         <div className="bg-white rounded-xl border border-blue-200 p-5">
           <p className="text-sm font-semibold text-gray-800 mb-3">
-            {new Date(selectedCell.dateKey).toLocaleDateString('en-IN', {
-              weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-            })}
+          {(() => {
+            const [y, m, d] = selectedCell.dateKey.split('-').map(Number);
+             return new Date(y, m - 1, d).toLocaleDateString('en-IN', {
+           weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+            });
+            })()}
           </p>
 
           {selectedCell.holidayName ? (
             <p className="text-sm text-gray-600">
-              🎉 Holiday — <span className="font-medium">{selectedCell.holidayName}</span>
+              Holiday — <span className="font-medium">{selectedCell.holidayName}</span>
             </p>
           ) : selectedCell.records.length === 0 ? (
             <p className="text-sm text-gray-400">No class session recorded on this date</p>

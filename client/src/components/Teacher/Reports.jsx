@@ -166,7 +166,7 @@ const TeacherReports = () => {
                 </div>
                 <div style={{ width: '100%', height: 260 }}>
                   <ResponsiveContainer>
-                    <BarChart data={reportData.studentStats.map(s => ({ name: s.student.name.split(' ')[0], percentage: s.percentage }))}>
+                    <BarChart data={reportData.studentStats.map(s => ({name: (s.student?.name || 'Unknown').split(' ')[0],percentage: s.percentage}))}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
                       <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#9ca3af' }} />
                       <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} tick={{ fontSize: 11, fill: '#9ca3af' }} />

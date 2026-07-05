@@ -299,13 +299,13 @@ const FaceAttendance = () => {
 
         {cameraError && (
           <div className="mt-3 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
-            <p className="text-sm text-red-600">⚠️ {cameraError}</p>
+            <p className="text-sm text-red-600"> {cameraError}</p>
           </div>
         )}
 
         {!isToday && step === "setup" && selectedDate && (
           <p className="mt-2 text-xs text-orange-500">
-            ⚠️ Marking attendance for a past date
+             Marking attendance for a past date
           </p>
         )}
 

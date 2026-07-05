@@ -1,14 +1,13 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axiosInstance from "../utils/axiosInstance";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
 import Sidebar from "../components/UI/Sidebar";
 import Navbar from "../components/UI/Navbar";
 import StatsCard from "../components/UI/StatsCard";
 import {
   Users,
-  GraduationCap,
+  GraduationCap,  
   BookOpen,
   TrendingUp,
   AlertTriangle,
@@ -186,7 +185,7 @@ export const AdminHome = () => {
                   {item.label}
                 </p>
                 <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
-                  ✓ {item.status}
+                  {item.status}
                 </span>
               </div>
             ))}

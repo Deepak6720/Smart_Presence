@@ -225,7 +225,7 @@ const ManualAttendance = () => {
             />
             {!isToday && (
               <p className="text-xs text-orange-500 mt-1">
-                ⚠️ You're marking attendance for a past date
+                You're marking attendance for a past date
               </p>
             )}
           </div>

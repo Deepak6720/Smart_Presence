@@ -148,7 +148,7 @@ const runAiPredictionAlerts = async () => {
 
   if (skippedQuotaGuard > 0) {
     console.log(
-      `⚠️ [Cron] Quota guard: deferring ${skippedQuotaGuard} student(s) to tomorrow's run`
+      `[Cron] Quota guard: deferring ${skippedQuotaGuard} student(s) to tomorrow's run`
     );
   }
 
@@ -204,7 +204,7 @@ const runAiPredictionAlerts = async () => {
       const prediction = JSON.parse(cleaned);
 
       if (!prediction?.overallRisk) {
-        console.warn(`⚠️ [Cron] Unexpected prediction format for ${student.name}:`, rawText.slice(0, 100));
+        console.warn(`[Cron] Unexpected prediction format for ${student.name}:`, rawText.slice(0, 100));
         continue;
       }
 
@@ -236,7 +236,7 @@ const runAiPredictionAlerts = async () => {
 
       if (errStr.includes('429') || errStr.includes('RESOURCE_EXHAUSTED')) {
         console.warn(
-          `⚠️ [Cron] Quota exhausted after ${i + 1} calls. ` +
+          `[Cron] Quota exhausted after ${i + 1} calls. ` +
           `Stopping AI calls — remaining students will use cache next run.`
         );
         break; 

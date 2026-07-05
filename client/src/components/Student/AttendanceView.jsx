@@ -77,8 +77,8 @@ const AttendanceView = () => {
             )}
             <p className="text-xs mt-2 opacity-80">
               {overall.percentage >= 75
-                ? "You're on track! 🎉"
-                : "Below 75% threshold ⚠️"}
+                ? "You're on track! "
+                : "Below 75% threshold "}
             </p>
           </div>
         </div>
