@@ -10,10 +10,23 @@ export default defineConfig({
     chunkSizeWarningLimit: 6000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'face-api': ['@vladmandic/face-api'],
-          'recharts': ['recharts'],
-          'vendor': ['react', 'react-dom', 'react-router-dom', 'axios']
+        manualChunks(id) {
+          if (id.includes('@vladmandic/face-api')) {
+            return 'face-api'
+          }
+
+          if (id.includes('recharts')) {
+            return 'recharts'
+          }
+
+          if (
+            id.includes('react') ||
+            id.includes('react-dom') ||
+            id.includes('react-router-dom') ||
+            id.includes('axios')
+          ) {
+            return 'vendor'
+          }
         }
       }
     }
