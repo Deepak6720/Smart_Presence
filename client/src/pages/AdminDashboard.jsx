@@ -128,39 +128,16 @@ export const AdminHome = () => {
                 color: "bg-indigo-50 text-indigo-700 hover:bg-indigo-100",
                 to: "/admin/analytics",
               },
-              {
-                label: "Run Daily Email Check",
-                color: "bg-gray-50 text-gray-700 hover:bg-gray-100",
-                isButton: true,
-              },
-            ].map((action) =>
-              action.isButton ? (
-                <button
-                  key={action.label}
-                  onClick={async () => {
-                    try {
-                      const res = await axiosInstance.post(
-                        "/api/ai/run-daily-check"
-                      );
-                      toast.success(res.data.message);
-                    } catch {
-                      toast.error("Failed to trigger check");
-                    }
-                  }}
-                  className={`flex items-center w-full px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${action.color}`}
-                >
-                  ⚡ {action.label}
-                </button>
-              ) : (
-                <Link
-                  key={action.label}
-                  to={action.to}
-                  className={`flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${action.color}`}
-                >
-                  {action.label}
-                </Link>
-              )
-            )}
+              
+            ].map((action) => (
+              <Link
+                key={action.label}
+                to={action.to}
+                className={`flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${action.color}`}
+              >
+                {action.label}
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -173,7 +150,6 @@ export const AdminHome = () => {
               { label: "At-Risk Predictor (Gemini)", status: "Live" },
               { label: "Anomaly Detection (Gemini)", status: "Live" },
               { label: "Email Notifications (Nodemailer)", status: "Live" },
-              { label: "Daily Cron Job", status: "Live" },
               { label: "Charts & Excel Export", status: "Live" },
               { label: "Security (Zod + Rate Limits)", status: "Live" },
             ].map((item) => (

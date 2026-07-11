@@ -17,7 +17,7 @@ const attendanceRoutes = require('./routes/attendanceRoutes');
 const aiRoutes = require('./routes/aiRoutes');
 
 connectDB();
-startCronJobs();//Registers the scheduled job once, when the server boots.
+startCronJobs();
 const app = express();
 
 app.use(cors({
