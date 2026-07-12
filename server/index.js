@@ -64,6 +64,19 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+if (process.env.NODE_ENV === 'production' && process.env.SERVER_URL) {
+  const https = require('https');
+  setInterval(() => {
+    https.get(`${process.env.SERVER_URL}/`, (res) => {
+      console.log(`Keep-alive ping: ${res.statusCode}`);
+    }).on('error', () => {
+    
+    });
+  }, 14 * 60 * 1000); 
+  console.log('Keep-alive ping started (Render free tier)');
+}
+
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
